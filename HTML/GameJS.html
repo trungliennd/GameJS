@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Game JS</title>
+    <link rel="stylesheet" type="text/css" href="../js/bootstrap-3.3.5/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="../js/bootstrap-3.3.5/dist/css/bootstrap.min.css">
+    <script type="application/javascript"  src="../js/bootstrap-3.3.5/dist/js/bootstrap.min.js"></script>
+    <script type="application/javascript" src="../js/vendor/jquery-3.2.1.min.js"></script>
+    <script type="application/javascript"  src="../js/fabric.js-2.0.0-beta.7/dist/fabric.min.js"></script>
+    <script type="application/javascript" src="../js/Map.js"></script>
+    <script type="application/javascript" src="../js/Graphics.js"></script>
+    <script type="application/javascript" src="../js/Robot.js"></script>
+    <script type="application/javascript" src="../js/ControllerGame.js"></script>
+    <style>
+        .body {
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        #canvas {
+            margin-top: 50px;
+        }
+    </style>
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3" id="game">
+            <canvas id="canvas" width="550" height="550" style="border:1px solid #000000"></canvas>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var canvas = new fabric.StaticCanvas('canvas');
+        //canvas.setBackgroundImage("../img/Image/image/map.png", canvas.renderAll.bind(canvas));
+        //var object = canvas.size();
+        map = new Map(11,11,10);
+        // console.log(map.getMap().toString())
+        r1 = new Robot(0,0,2,'down');
+        r2 = new Robot(10,10,3,'up');
+        graphics = new Graphics(map,canvas);
+        graphics.canvasMap();
+      /*  r2.updateRobotTop(37);
+        graphics.animateRorate(r2);
+        var run = function () {
+            r2.updateRobotTop(38);
+            graphics.animateRorate(r2);
+            console.log('r2 (x,y) is: (' + r2.x + ', ' + r2.y +')');
+        }*/
+     //   setTimeout(run,5000);
+      //  console.log('r2 (x,y) is: (' + r2.x + ', ' + r2.y +')');
+        controller = new ControllerGame(r1,r2,map,graphics);
+        controller.actionEventKeyBoard(r2);
+   //     graphics.goToPosition(r2,'top');
+        /*document.addEventListener('keydown',function (e) {
+           console.log(e.keyCode);
+        });*/
+    });
+</script>
+</body>
+</html>
