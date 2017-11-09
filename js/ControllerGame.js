@@ -36,14 +36,29 @@ class ControllerGame {
                 y = Robot.y + Robot.directY[0];
                 if (!map.checkMap(x, y))
                     return;
+                map.updateMap(x,y,Robot.key);
                 Robot.updateRobotTop(e.keyCode);
                 graphics.animateRorate(Robot);
             }else if (e.keyCode == 40) {
-
+                // down
+                x = Robot.x + Robot.directX[1];
+                y = Robot.y + Robot.directY[1];
+                if(!map.checkMap(x,y)) return;
+                map.updateMap(x,y,Robot.key);
+                Robot.updateRobotTop(e.keyCode);
+                graphics.animateRorate(Robot);
+            }else if(e.keyCode == 37) {
+                //left
+            }else if(e.keyCode == 39) {
+                //right
             }
         }
+       // if(this.turn == Robot.key) {
         document.addEventListener('keydown', event);
+        //}
+     //   document.removeEventListener('keydown', event);
     }
+
 
     getMap(){
         return this.map;

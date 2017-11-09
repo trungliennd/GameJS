@@ -23,11 +23,11 @@ class Map {
         this.map[x][y] = key;
     }
 
-    checkMap(x,y) {
+    checkMap(x,y) {;
         if(x > this.getHeight || y > this.getHeight || x < 0 || y < 0) {
             return false;
         }
-        if(this.map[x][y] == 1) {
+        if(this.map[x][y] !== 0) {
             return false;
         }
         return true;
