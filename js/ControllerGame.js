@@ -27,7 +27,9 @@ class ControllerGame {
     actionEventKeyBoard(Robot) {
         console.log('case');
         map = this.map;
+        var turn = this.turn;
         var event = function (e) {
+            if(turn !== Robot.key) return;
             console.log('case1');
             var x, y;
             if (e.keyCode == 38) {
@@ -83,6 +85,12 @@ class ControllerGame {
     }
     setRobot2(robot) {
         this.robot1 = robot;
+    }
+    getTurn() {
+        return this.turn;
+    }
+    setTurn(turn) {
+        this.turn = turn;
     }
 
 }
