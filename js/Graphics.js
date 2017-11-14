@@ -94,7 +94,8 @@ class Graphics {
                     }
                     item.animate('top',y,{
                         duration: 500,
-                        onChange: canvas.renderAll.bind(canvas)
+                        onChange: canvas.renderAll.bind(canvas),
+                        easing: fabric.util.ease['easeInOutQuad']
                     });
 
                 }else {
@@ -106,23 +107,26 @@ class Graphics {
                     }
                     item.animate('left',x,{
                         duration: 500,
-                        onChange: canvas.renderAll.bind(canvas)
+                        onChange: canvas.renderAll.bind(canvas),
+                        easing: fabric.util.ease['easeInOutQuad']
                     });
                 }
             });
         }
         fabric.Image.fromURL(src, function (image) {
-            canvas.insertAt(image,0);
+            canvas.insertAt(image,canvas.getObjects().length - 3);
             if(Robot.key == 2) {
                 canvas.item(canvas.getObjects().length - 2).animate('angle',Robot.arc, {
-                    duration: 1000,
+                    duration: 500,
                     onChange: canvas.renderAll.bind(canvas),
+                    easing: fabric.util.ease['easeInOutQuad'],
                     onComplete: goto
                 });
             }else {
                 canvas.item(canvas.getObjects().length - 1).animate('angle',Robot.arc, {
-                    duration: 1000,
+                    duration: 500,
                     onChange: canvas.renderAll.bind(canvas),
+                    easing: fabric.util.ease['easeInOutQuad'],
                     onComplete: goto
                 });
             }

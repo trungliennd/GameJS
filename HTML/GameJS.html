@@ -12,6 +12,8 @@
     <script type="application/javascript" src="../js/Graphics.js"></script>
     <script type="application/javascript" src="../js/Robot.js"></script>
     <script type="application/javascript" src="../js/ControllerGame.js"></script>
+    <script type="application/javascript" src="../js/StateRobot.js"></script>
+    <script type="application/javascript" src="../js/ActionRobot.js"></script>
     <style>
         .body {
             text-align: center;
@@ -39,8 +41,8 @@
         //var object = canvas.size();
         map = new Map(11,11,10);
         // console.log(map.getMap().toString())
-        r1 = new Robot(0,0,2,'down');
-        r2 = new Robot(10,10,3,'up');
+        r1 = new Robot(0,0,2,'down',map);
+        r2 = new Robot(10,10,3,'up',map);
         graphics = new Graphics(map,canvas);
         graphics.canvasMap();
       /*  r2.updateRobotTop(37);
@@ -53,8 +55,7 @@
      //   setTimeout(run,5000);
       //  console.log('r2 (x,y) is: (' + r2.x + ', ' + r2.y +')');
         controller = new ControllerGame(r1,r2,map,graphics);
-        controller.actionEventKeyBoard(r2);
-        console.log(map.getMap());
+        controller.run();
    //     graphics.goToPosition(r2,'top');
         /*document.addEventListener('keydown',function (e) {
            console.log(e.keyCode);

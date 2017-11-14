@@ -23,10 +23,11 @@ class Map {
         this.map[x][y] = key;
     }
 
-    checkMap(x,y) {;
-        if(x > this.getHeight || y > this.getHeight || x < 0 || y < 0) {
+    checkMap(x,y) {
+        if(x >= this.heigth || y >= this.height || x < 0 || y < 0) {
             return false;
         }
+     //    console.log('(x,y) is: (' + x +',' + y +')');
         if(this.map[x][y] !== 0) {
             return false;
         }
@@ -83,7 +84,7 @@ class Map {
         }
     }
 
-    checkWin() {
+    checkWin(turn) {
         var count2 = 0;
         var count3 = 0;
         for(var i = 0;i < this.heigth;i++) {
@@ -91,6 +92,15 @@ class Map {
                 if(this.map[i][j] == 2) count2 = count2 + 1;
                 if(this.map[i][j] == 3) count3 = count3 + 1;
             }
+        }
+        if(count2 == count3) {
+            if(turn == 2) return 3
+            else return 2;
+        }
+        if(count2 > count3){
+            return count2;
+        }else {
+            return count3;
         }
     }
 
