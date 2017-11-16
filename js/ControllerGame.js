@@ -2,6 +2,11 @@ function RandomTurn(minInt,maxInt) {
     return Math.floor(Math.random()*(maxInt - minInt + 1) + minInt);
 }
 
+function swapValue(x) {
+    if(x == 2) return 3;
+    else return 2;
+}
+
 class ControllerGame {
 
     constructor(Robot1, Robot2,map,graphics) {
@@ -17,33 +22,47 @@ class ControllerGame {
         console.log('turn is: ' + this.turn);
         this.actionEventKeyBoard(this.robot2);
         var running = true;
-        var robot1 = this.robot1;
-        var robot2 = this.robot2;
+        var sefl = this;
+        var win;
        // while(running) {
         function runS() {
             var checkWin = false;
-            if (this.turn == 2) {
-                var robotEnmey = new Point(robot2.x, robot2.y);
-                var value = robot1.move(robotEnmey);
+            console.log('turn is: ' + sefl.turn);
+            if (sefl.turn == 2) {
+                var robotEnmey = new Point(sefl.robot2.x, sefl.robot2.y);
+                var value = sefl.robot1.move(robotEnmey);
                 if (value !== -1) {
-                    this.actionRobot(robot1);
-                    this.turn = 3;
+                    sefl.actionRobot(sefl.robot1);
+                    sefl.turn = 3;
                 } else {
                     checkWin = true;
                 }
             } else {
-                checkWin = robot2.checkTerminal(robot2.x, robot2.y);
+                checkWin = sefl.robot2.checkTerminal(sefl.robot2.x, sefl.robot2.y);
                 //            console.log('window is: ' + window.event);
             }
             if (checkWin) {
-                var win = this.map.checkWin(this.turn);
+                win = this.map.checkWin(sefl.turn);
                 console.log('Win is: ' + win);
+                if(win == 2) {
+                    document.getElementById('winner').innerHTML = 'Play Green Victory';
+                }else {
+                    document.getElementById('winner').innerHTML = 'Play Red Victory';
+                }
                 running = false;
             }
+            if(!running) {
+                clearLoop();
+            }
         }
-        setInterval(runS, 2000);
+
+        var loop = setInterval(runS, 2000);
         //}
+        function clearLoop() {
+            clearInterval(loop);
+        }
     }
+
 
     updateTurn(){
         if(turn == 1) {
@@ -58,10 +77,9 @@ class ControllerGame {
     }
 
     actionEventKeyBoard(Robot) {
-        var map = this.map;
-        var turn = this.turn;
+        var self = this;
         var event = function (e) {
-            if(turn !== Robot.key) return;
+            if(self.turn !== Robot.key) return;
             var x, y;
             if (e.keyCode == 38) {
                 // up
@@ -96,11 +114,12 @@ class ControllerGame {
             }
             if(typeof(x) == 'undefined' || typeof(y) == 'undefined')
                 return;
-            if (!map.checkMap(x, y))
+            if (!self.map.checkMap(x, y))
                 return;
-            map.updateMap(x,y,Robot.key);
+            self.map.updateMap(x,y,Robot.key);
             Robot.updateRobotTop(e.keyCode);
-            graphics.animateRorate(Robot);
+            self.graphics.animateRorate(Robot);
+            self.turn = swapValue(Robot.key);
         }
        // if(this.turn == Robot.key) {
         document.addEventListener('keydown', event, false);

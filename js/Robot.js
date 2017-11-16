@@ -1,4 +1,4 @@
-DEPTHLIMIT = 22;
+DEPTHLIMIT = 20;
 DIEMTHUONG = 1000;
 LIMIT = Number.MAX_SAFE_INTEGER;
 
@@ -173,7 +173,7 @@ class Robot {
 
     move(RobotEnemy) {
         var ac = this.alphaBetaSearch(new StateRobot(0, this.x, this.y),RobotEnemy);
-        if(ac.direction < 0) {
+        if(ac.direction == -1) {
             return -1;
         }
         var e;
@@ -205,7 +205,7 @@ class Robot {
         return ac;
     }
 
-    maxValue(state, alpha, beta, RobotEnemy, value) {
+    maxValue(state, alpha, beta, RobotEnemy, value, MaxDepth) {
         var currentScore = 0;
         if(this.checkTerminal(state.x,state.y)) {
             var r = new ActionRobot(-1, -DIEMTHUONG + state.depth);
@@ -215,8 +215,9 @@ class Robot {
             var a = this.BFS(state.x, state.y);
             var b = this.BFS(RobotEnemy.x,RobotEnemy.y);
             currentScore = a - b;
-            for(var i = 0;i < this.map.height;i++) {
-                for(var j = 0; j < this.map.height;j++) {
+            var size = this.map.getHeigth();
+            for(var i = 0;i < size;i++) {
+                for(var j = 0; j < size;j++) {
                     if (this.map.getMap()[i][j] == 4) {
                         this.map.updateMap(i,j,0);
                     }
@@ -247,16 +248,18 @@ class Robot {
         return new ActionRobot(vtv,v);
     }
 
-    minValue(state, alpha, beta, RobotEnemy, value) {
+    minValue(state, alpha, beta, RobotEnemy, value, MinDepth) {
         var currentScore = 0;
         if(this.checkTerminal(state.x,state.y)) {
             var r = new ActionRobot(-1, DIEMTHUONG - state.depth/2);
             return r;
         }
         if(state.depth == DEPTHLIMIT) {
+           // console.log('min depth');
             currentScore = this.BFS(RobotEnemy.x,RobotEnemy.y) - this.BFS(state.x, state.y);
-            for(var i = 0;i < this.map.height;i++) {
-                for(var j = 0;j < this.map.height;j++) {
+            var size = this.map.getHeigth();
+            for(var i = 0;i < size;i++) {
+                for(var j = 0;j < size;j++) {
                     if(this.map.getMap()[i][j] == 4){
                         this.map.updateMap(i,j,0);
                     }
@@ -264,7 +267,7 @@ class Robot {
             }
             return new ActionRobot(-2, currentScore);
         }
-
+     //   console.log('min depth 1');
         var v = LIMIT;
         var vtv = -1;
         var newX;

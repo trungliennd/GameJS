@@ -15,19 +15,33 @@
     <script type="application/javascript" src="../js/StateRobot.js"></script>
     <script type="application/javascript" src="../js/ActionRobot.js"></script>
     <style>
-        .body {
+        body {
             text-align: center;
             margin: 0;
             padding: 0;
+            background-image: url('http://cdn.backgroundhost.com/backgrounds/subtlepatterns/retina_wood.png');
+            background-size: cover;
         }
+
         #canvas {
             margin-top: 50px;
+            margin-bottom: 50px;
         }
     </style>
 
 </head>
 <body>
 <div class="container">
+    <div class="row">
+        <div class="col-md-offset-4 col-md-4">
+        <main>
+            <div class="victory-background">
+                <h1>Game</h1>
+                <h2  id="winner"></h2>
+            </div>
+        </main>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-6 col-md-offset-3" id="game">
             <canvas id="canvas" width="550" height="550" style="border:1px solid #000000"></canvas>
@@ -39,7 +53,7 @@
         var canvas = new fabric.StaticCanvas('canvas');
         //canvas.setBackgroundImage("../img/Image/image/map.png", canvas.renderAll.bind(canvas));
         //var object = canvas.size();
-        map = new Map(11,11,10);
+        map = new Map(11,11,16);
         // console.log(map.getMap().toString())
         r1 = new Robot(0,0,2,'down',map);
         r2 = new Robot(10,10,3,'up',map);
@@ -56,6 +70,7 @@
       //  console.log('r2 (x,y) is: (' + r2.x + ', ' + r2.y +')');
         controller = new ControllerGame(r1,r2,map,graphics);
         controller.run();
+        console.log(map.getMap());
    //     graphics.goToPosition(r2,'top');
         /*document.addEventListener('keydown',function (e) {
            console.log(e.keyCode);

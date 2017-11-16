@@ -98,9 +98,9 @@ class Map {
             else return 2;
         }
         if(count2 > count3){
-            return count2;
+            return 2;
         }else {
-            return count3;
+            return 3;
         }
     }
 
